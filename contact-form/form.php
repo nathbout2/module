@@ -4,11 +4,17 @@ if (isset($_POST['user_mail'])&&!empty($_POST['user_mail']))/* permet de ne pas 
     $mail=$_POST['user_mail'];
     $msg=$_POST['user_message'];
 
-    $recipient = "wchazal26@gmail.com";
+    $recipient = "w.chazal@codeur.online";
     $subject = "Formulaire";
 
-    $message=$mail.'<br>'.$msg;
-    mail($recipient, $sujet, $message);
+    $message= 'Message envoyé par '.$mail.' : '.$msg;
+    /* Fait passer des info pour gérer l encodage */
+    $headerFields = array(
+        "From: {$mail}",
+        "MIME-Version: 1.0",
+        "Content-Type: text/html;charset=utf-8" 
+        );
+    mail($recipient, $sujet, $message, implode("\r\n", $headerFields));
 
     echo 'Votre message a bien été transmis. Nous vous contacterons sous peu <br>';
     echo '<button> <a href="index.php">retour</a> </button>';
