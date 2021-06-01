@@ -7,7 +7,7 @@
     <title>Back-office Portefolio</title>
 </head>
 <body>
-    <form action="register.php" method="post">
+    <form action="register-form-handler.php" method="post">
         <div class="">
             <label for="input-username"> Nom d'utilisateur : </label>
             <input type="text" name="username" id="input-username">
@@ -29,6 +29,7 @@
            <input type="submit" value="Envoyer" id="submit"> 
         </div>
     </form>
+    <a href="index.php"><button>Retour</button></a>
     <script src="main.js"></script>
 </body>
 </html>
