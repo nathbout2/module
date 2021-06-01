@@ -8,7 +8,17 @@ $query->execute (array('username'=>$_POST['username']));
 $result = $query->fetch();
 
 if(!$result){
-    echo 'l\'identifiant est différent';
+    echo 'l\'identifiant et/ou le Mot de passe sont incorrects';
 }else{
-    echo 'C\'est ok';
+    $verif = password_verify($_POST['password'],$result['password']); 
+    if(!$verif){
+        echo 'l\'identifiant et/ou le Mot de passe sont incorrects';
+    }else{
+        session_start();
+        $_SESSION['id']=$result['id'];
+        $_SESSION['username']=$result['username'];
+        $_SESSION['success']='Connexion réussie';
+        header('Location:home.php');
+    }
+
 }
