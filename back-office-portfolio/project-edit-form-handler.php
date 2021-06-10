@@ -1,10 +1,13 @@
 <?php
 session_start();
+
 if ($_SESSION['username']) {
+
 
     if ($_POST) {
 
         if (
+            isset($_POST['id']) && !empty($_POST['id']) &&
             isset($_POST['project_tittle']) && !empty($_POST['project_tittle']) &&
             isset($_POST['project_begin']) && !empty($_POST['project_begin']) &&
             isset($_POST['project_end']) && !empty($_POST['project_end']) &&
@@ -15,6 +18,7 @@ if ($_SESSION['username']) {
         ) {
 
             require_once("db-connect.php");
+            $id = strip_tags($_POST['id']);
             $title = strip_tags($_POST['project_tittle']);
             $begin = strip_tags($_POST['project_begin']);
             $end = strip_tags($_POST['project_end']);
@@ -24,10 +28,12 @@ if ($_SESSION['username']) {
             $link = strip_tags($_POST['project_link']);
 
 
-            $sql = 'INSERT INTO `projet`(`project_tittle`, `project_begin`, `project_end`, `project_context`, `project_specs`, `project_githublink`, `project_link`) VALUES(:project_tittle, :project_begin, :project_end, :project_context, :project_specs, :project_githublink, :project_link);';
+            $sql = 'UPDATE `projet` SET `project_tittle`=:project_tittle, `project_begin`=:project_begin, `project_end`=:project_end,`project_context`=:project_context, `project_specs`=:project_specs,`project_githublink`=:project_githublink,`project_link`=:project_link WHERE `id`=:id';
+
 
             $query = $db->prepare($sql);
 
+            $query->bindValue(':id', $id, PDO::PARAM_INT);
             $query->bindValue(':project_tittle', $title, PDO::PARAM_STR);
             $query->bindValue(':project_begin', $begin, PDO::PARAM_STR);
             $query->bindValue(':project_end', $end, PDO::PARAM_STR);
@@ -46,5 +52,5 @@ if ($_SESSION['username']) {
         echo 'pour accéder à cette page, vous devez publier un projet';
     }
 } else {
-    echo 'vous n\'êtes pas identifié';
+    echo "vous n'êtes pas identifié";
 }
