@@ -34,6 +34,7 @@ if ($_SESSION['username']) {
     
     <?= $result['project_context'] ?>
     <?= $result['project_specs'] ?>
+    <img src="pictures/<?= $result['project_picture'] ?>" alt="">
 
 
     <a href="project-delete.php?id=<?= $result['id'] ?>">Supprimer <?= $result['project_tittle'] ?></a>
